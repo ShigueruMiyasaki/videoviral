@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VideoViral — Setup</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #14141c;
+      --border: #2a2a38;
+      --accent: #8b5cf6;
+      --green: #22c55e;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 1.25rem 1.5rem 3rem;
+    }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+    h1 { margin: 0; font-size: 1.35rem; }
+    a { color: var(--accent); text-decoration: none; }
+    .grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 1rem; }
+    @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem 1.15rem;
+      margin-bottom: 1rem;
+    }
+    h2 { margin: 0 0 0.35rem; font-size: 0.95rem; }
+    p.lead { margin: 0 0 0.9rem; color: var(--muted); font-size: 0.82rem; line-height: 1.45; }
+    label { display: block; font-size: 0.72rem; color: var(--muted); margin: 0.7rem 0 0.3rem; }
+    input, select {
+      width: 100%;
+      background: #0c0c12;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.65rem;
+      font: inherit;
+      font-size: 0.85rem;
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    input[type="range"] { padding: 0; accent-color: var(--accent); }
+    .level-name { font-size: 1rem; margin: 0.2rem 0; }
+    .hours { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .hours label { margin: 0; color: var(--text); font-size: 0.78rem; display: flex; gap: 0.3rem; align-items: center; }
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.82rem;
+    }
+    .primary { background: var(--accent); color: white; }
+    .ghost { background: #27272a; color: white; }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .account {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding: 0.65rem 0;
+      font-size: 0.82rem;
+    }
+    .meta { color: var(--muted); font-size: 0.75rem; }
+    pre {
+      background: #0c0c12;
+      border-radius: 8px;
+      padding: 0.75rem;
+      overflow: auto;
+      font-size: 0.75rem;
+      line-height: 1.45;
+      max-height: 420px;
+    }
+    .weights { display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 0.75rem; font-size: 0.8rem; }
+    .ok { color: var(--green); font-size: 0.8rem; }
+    .err { color: #fca5a5; font-size: 0.8rem; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Setup do estúdio</h1>
+    <a href="/">Voltar ao Kanban</a>
+  </header>
+  <div class="grid">
+    <div>
+      <section>
+        <h2>Nível de interação</h2>
+        <p class="lead" id="level-summary">Carregando…</p>
+        <input id="level" type="range" min="1" max="5" step="1" value="3" />
+        <p class="level-name" id="level-name">Nível 3</p>
+        <div class="row">
+          <div>
+            <label for="niche">Nicho</label>
+            <select id="niche">
+              <option value="curiosidades">Curiosidades</option>
+              <option value="financas">Finanças</option>
+              <option value="podcasts">Podcasts</option>
+              <option value="games">Games</option>
+            </select>
+          </div>
+          <div>
+            <label for="tone">Tom</label>
+            <select id="tone">
+              <option value="informativo">Informativo</option>
+              <option value="sarcastico">Sarcástico</option>
+              <option value="humoristico">Humor</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="layout">Enquadramento</label>
+            <select id="layout">
+              <option value="duet">Tela dividida (50/50)</option>
+              <option value="pip">Vídeo cheio + avatar</option>
+            </select>
+          </div>
+          <div>
+            <label for="mode">Publicação</label>
+            <select id="mode">
+              <option value="review">Revisão humana</option>
+              <option value="autopilot">Piloto automático</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="tts">Voz</label>
+            <select id="tts">
+              <option value="edge">Edge TTS (local, grátis)</option>
+              <option value="elevenlabs">ElevenLabs</option>
+            </select>
+          </div>
+          <div>
+            <label for="avatar">Avatar</label>
+            <select id="avatar">
+              <option value="placeholder">Placeholder local</option>
+              <option value="heygen">HeyGen</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="account">Conta de destino</label>
+            <select id="account"><option value="">Nenhuma</option></select>
+          </div>
+          <div>
+            <label for="music">Música de fundo (volume)</label>
+            <input id="music" type="number" min="0" max="0.3" step="0.01" value="0.08" />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="save" type="button">Salvar setup</button>
+          <button class="ghost" id="simulate" type="button">Simular pipeline</button>
+          <button class="ghost" id="simulate-best" type="button">Simular com maior peso</button>
+        </div>
+        <p id="status" class="ok"></p>
+      </section>
+
+      <section>
+        <h2>Contas</h2>
+        <p class="lead">Aqui fica o canal, o horário de pico e o estado do login. O token OAuth continua no ambiente da máquina. TikTok entra como export manual até a API oficial de postagem estar aprovada.</p>
+        <div id="accounts"></div>
+        <div class="row">
+          <div>
+            <label for="acc-platform">Plataforma</label>
+            <select id="acc-platform">
+              <option value="youtube">YouTube Shorts</option>
+              <option value="instagram">Instagram Reels</option>
+              <option value="tiktok">TikTok</option>
+            </select>
+          </div>
+          <div>
+            <label for="acc-handle">@</label>
+            <input id="acc-handle" placeholder="canal" />
+          </div>
+        </div>
+        <label>Horários de pico</label>
+        <div class="hours" id="hours"></div>
+        <div class="actions">
+          <button class="primary" id="add-account" type="button">Adicionar conta</button>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section>
+        <h2>Próxima combinação</h2>
+        <p class="lead" id="suggestion">Sem amostras ainda. Os pesos começam iguais.</p>
+        <div class="weights" id="weights"></div>
+        <label for="retention">Registrar retenção desta combinação (%)</label>
+        <input id="retention" type="number" min="0" max="100" value="62" />
+        <div class="actions">
+          <button class="ghost" id="record" type="button">Registrar resultado</button>
+        </div>
+      </section>
+      <section>
+        <h2>Plano da simulação</h2>
+        <p class="lead">O job entra na coluna Aguardando. Aprovar uma simulação sem vídeo é bloqueado de propósito.</p>
+        <pre id="plan">Rode uma simulação para ver os beats.</pre>
+      </section>
+    </div>
+  </div>
+  <script>
+    const HOURS = [8, 11, 12, 15, 18, 21];
+    let levels = [];
+    let state = null;
+
+    const $ = (id) => document.getElementById(id);
+
+    function selectedHours() {
+      return [...document.querySelectorAll(".hour:checked")].map((el) => Number(el.value));
+    }
+
+    function renderHours(selected) {
+      $("hours").innerHTML = HOURS.map((hour) => {
+        const on = selected.includes(hour) ? "checked" : "";
+        return `<label><input class="hour" type="checkbox" value="${hour}" ${on} /> ${hour}h</label>`;
+      }).join("");
+    }
+
+    function showLevel() {
+      const level = Number($("level").value);
+      const spec = levels.find((item) => item.level === level);
+      $("level-name").textContent = spec ? `Nível ${spec.level} — ${spec.name}` : `Nível ${level}`;
+      $("level-summary").textContent = spec ? spec.summary : "";
+    }
+
+    function fill(data) {
+      state = data;
+      levels = data.levels || [];
+      const config = data.config;
+      $("level").value = config.interaction_level;
+      $("niche").value = config.niche;
+      $("tone").value = config.tone;
+      $("layout").value = config.layout;
+      $("mode").value = config.mode;
+      $("tts").value = config.tts_provider;
+      $("avatar").value = config.avatar_provider;
+      $("music").value = config.music_volume;
+      showLevel();
+
+      const account = $("account");
+      account.innerHTML = `<option value="">Nenhuma</option>` + (data.accounts || []).map((item) => {
+        const selected = item.id === config.account_id ? "selected" : "";
+        return `<option value="${item.id}" ${selected}>${item.platform} · @${item.handle}</option>`;
+      }).join("");
+
+      $("accounts").innerHTML = (data.accounts || []).length
+        ? data.accounts.map((item) => `
+          <div class="account">
+            <div>
+              <strong>${item.label}</strong>
+              <div class="meta">${item.platform} · @${item.handle} · ${item.auth} · picos ${item.peak_hours.join(", ")}h</div>
+            </div>
+            <button class="ghost" type="button" data-remove="${item.id}">Remover</button>
+          </div>`).join("")
+        : `<p class="meta">Nenhuma conta ainda.</p>`;
+
+      const suggestion = data.suggestion;
+      $("suggestion").textContent = suggestion
+        ? `Sugestão: ${suggestion.niche} · tom ${suggestion.tone} · nível ${suggestion.interaction_level} · ${suggestion.layout}. ${suggestion.reason}`
+        : "";
+
+      const weights = data.weights || {};
+      const lines = [];
+      for (const group of ["niches", "tones", "levels", "layouts"]) {
+        const table = weights[group] || {};
+        for (const [key, value] of Object.entries(table)) {
+          lines.push(`<span>${group} · ${key}</span><strong>${Number(value).toFixed(2)}</strong>`);
+        }
+      }
+      $("weights").innerHTML = lines.join("");
+      renderHours([12, 18, 21]);
+    }
+
+    async function load() {
+      const data = await fetch("/api/setup").then((res) => res.json());
+      fill(data);
+    }
+
+    function payload() {
+      return {
+        niche: $("niche").value,
+        interaction_level: Number($("level").value),
+        tone: $("tone").value,
+        layout: $("layout").value,
+        mode: $("mode").value,
+        account_id: $("account").value || null,
+        tts_provider: $("tts").value,
+        avatar_provider: $("avatar").value,
+        min_duration_sec: 15,
+        max_duration_sec: 60,
+        min_engagement: 0.02,
+        caption_style: "hormozi",
+        background_music: Number($("music").value) > 0,
+        music_volume: Number($("music").value),
+      };
+    }
+
+    async function save() {
+      $("status").className = "ok";
+      $("status").textContent = "Salvando…";
+      const res = await fetch("/api/setup", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload()),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        $("status").className = "err";
+        $("status").textContent = data.detail || "Não salvou.";
+        return;
+      }
+      fill(data);
+      $("status").textContent = "Setup salvo.";
+    }
+
+    async function simulate(useSuggestion) {
+      $("status").textContent = "Simulando…";
+      if (!useSuggestion) await save();
+      const res = await fetch("/api/setup/dry-run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          niche: $("niche").value,
+          level: Number($("level").value),
+          use_suggestion: useSuggestion,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        $("status").className = "err";
+        $("status").textContent = data.detail || "A simulação falhou.";
+        return;
+      }
+      $("plan").textContent = JSON.stringify({
+        job_id: data.job_id,
+        stages: data.stages,
+        spoken_script: data.plan.spoken_script,
+        beats: data.plan.beats,
+      }, null, 2);
+      $("status").className = "ok";
+      $("status").textContent = `Job ${data.job_id} na fila de revisão.`;
+    }
+
+    $("level").addEventListener("input", showLevel);
+    $("save").addEventListener("click", save);
+    $("simulate").addEventListener("click", () => simulate(false));
+    $("simulate-best").addEventListener("click", () => simulate(true));
+    $("add-account").addEventListener("click", async () => {
+      const res = await fetch("/api/setup/accounts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          platform: $("acc-platform").value,
+          handle: $("acc-handle").value,
+          label: $("acc-handle").value,
+          peak_hours: selectedHours(),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        $("status").className = "err";
+        $("status").textContent = data.detail || "Não adicionou a conta.";
+        return;
+      }
+      $("acc-handle").value = "";
+      await load();
+      $("status").className = "ok";
+      $("status").textContent = "Conta adicionada. O login OAuth ainda é feito fora desta tela.";
+    });
+    $("accounts").addEventListener("click", async (event) => {
+      const id = event.target.dataset.remove;
+      if (!id) return;
+      await fetch("/api/setup/accounts/" + id, { method: "DELETE" });
+      await load();
+    });
+    $("record").addEventListener("click", async () => {
+      const res = await fetch("/api/setup/outcome", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          retention_pct: Number($("retention").value),
+          niche: $("niche").value,
+          tone: $("tone").value,
+          level: Number($("level").value),
+          layout: $("layout").value,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        $("status").className = "err";
+        $("status").textContent = data.detail || "Não registrou.";
+        return;
+      }
+      await load();
+      $("status").className = "ok";
+      $("status").textContent = "Peso atualizado a partir da retenção.";
+    });
+
+    renderHours([12, 18, 21]);
+    load().catch((error) => {
+      $("status").className = "err";
+      $("status").textContent = String(error);
+    });
+  </script>
+</body>
+</html>

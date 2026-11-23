@@ -1,0 +1,25 @@
+# Segredos — nunca commitar
+.env
+.env.*
+!.env.example
+*.pem
+secrets/
+credentials.json
+
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+storage/raw/*
+storage/clips/*
+storage/output/*
+storage/audio/*
+storage/avatars/*
+storage/jobs_db.json
+storage/studio/*.json
+!storage/studio/.gitkeep
+!storage/raw/.gitkeep
+!storage/clips/.gitkeep
+!storage/output/.gitkeep
