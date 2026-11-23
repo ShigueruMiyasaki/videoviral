@@ -1,34 +1,26 @@
-# Rascunho antigo (Postgres, Redis, MinIO). O app ainda não usa esses serviços.
-# Para a VPS, use docker-compose.prod.yml via deploy/vps-up.sh.
+# Arquivo que a Hostinger lê ao colar a URL do repositório.
+# O painel guarda vídeos no volume videoviral-data. Não usa Postgres.
 services:
-  postgres:
-    image: postgres:16-alpine
+  api:
+    build: .
     environment:
-      POSTGRES_USER: videoviral
-      POSTGRES_PASSWORD: videoviral
-      POSTGRES_DB: videoviral
+      API_HOST: 0.0.0.0
+      API_PORT: "8000"
+      DASHBOARD_USER: ${DASHBOARD_USER:-admin}
+      DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD}
+      YOUTUBE_API_KEY: ${YOUTUBE_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      ELEVENLABS_API_KEY: ${ELEVENLABS_API_KEY:-}
+      ELEVENLABS_VOICE_ID: ${ELEVENLABS_VOICE_ID:-}
+      HEYGEN_API_KEY: ${HEYGEN_API_KEY:-}
+      HEYGEN_AVATAR_ID: ${HEYGEN_AVATAR_ID:-}
+      LLM_PROVIDER: ${LLM_PROVIDER:-gemini}
     ports:
-      - "5432:5432"
+      - "8000:8000"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-
-  minio:
-    image: minio/minio:latest
-    command: server /data --console-address ":9001"
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    volumes:
-      - miniodata:/data
+      - videoviral-data:/app/storage
+    restart: unless-stopped
 
 volumes:
-  pgdata:
-  miniodata:
+  videoviral-data:

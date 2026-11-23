@@ -4,6 +4,25 @@ Painel para montar cortes 9:16 com reação em tela dividida. Na sua máquina el
 
 O arquivo `.env` não entra no Git. Chaves de API e a senha do painel ficam só na máquina que executa.
 
+## Publicar na Hostinger
+
+No hPanel: **VPS → Manage → Terminal** (ou Browser terminal). Entre como `root` e cole:
+
+```bash
+apt-get update && apt-get install -y git
+git clone https://github.com/ShigueruMiyasaki/videoviral.git
+cd videoviral
+bash deploy/vps-up.sh
+```
+
+O script instala o Docker, gera a senha do painel e sobe em `http://IP-DA-VPS`. O usuário é `admin`. A senha aparece uma vez no final do script.
+
+Se o Docker Manager pedir variáveis, preencha só `DASHBOARD_PASSWORD`. Não use `POSTGRES_USER`: esta versão não conecta em banco.
+
+URL do compose, se o painel pedir o arquivo:
+
+`https://raw.githubusercontent.com/ShigueruMiyasaki/videoviral/main/docker-compose.yml`
+
 ## Publicar na VPS a partir do GitHub
 
 Na VPS, como root:
